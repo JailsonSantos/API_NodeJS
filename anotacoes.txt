@@ -1,0 +1,47 @@
+# INCIANDO O PROJETO
+
+  - yarn init -y
+
+# CRIAR O ARQUIVO docker-compose.yml com as configurações abaixo:
+
+version: "3"
+
+services:
+  db-postgres-api-nodejs:
+    image: postgres:alpine
+    ports:
+      - "5435:5432"
+    container_name: "db-postgres-api-nodejs"
+    restart: always
+    volumes:
+      - ./banco-de-dados-api-nodejs:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpassword
+
+volumes:
+  banco-de-dados-api-nodejs:
+
+
+# RODAR O COMANDO NO POWER SHELL
+  - docker compose up -d (Executar o container em segundo plano)
+
+# INSTALANDO PRISMA E PRISMA CLIENT
+  - yarn add prisma @prisma/client
+
+# EXECUTANDO O PRISMA
+  - yarn prisma init
+
+# CONFIGURANDO O ARQUIVO .ENV COM AS CONFIGURAÇÕES DO BANDO DE DADOS
+  - DATABASE_URL="postgresql://nomeDoUsuario:senhaDoUsuario@localhost:portaUtilizada/nomeDoBancoDeDados?schema=public"
+  - DATABASE_URL="postgresql://pguser:pgpassword@localhost:5435/mydb?schema=public"
+
+# CRIANDO AS MIGRATIONS
+  - yarn prisma migrate dev --name init
+
+# INSTALANDO BIBLIOTECAS AUXILIARES'
+  - yarn add express cors dotenv
+  - yarn add -D nodemon
+  - yarn add -D sucrase
+  - yarn add bcrypt
+  - yarn add yup
